@@ -234,14 +234,18 @@ sudo systemctl restart syslog
 ```
 
 ### Disable resolved
+```Bash
 sudo systemctl disable systemd-resolved
 sudo systemctl stop systemd-resolved
+```
 
 ### Enable CoreDNS/Unbound
+```Bash
 sudo systemctl enable unbound
 sudo systemctl start unbound
 sudo systemctl enable coredns
 sudo systemctl start coredns
+```
 
 ### CoreDNS Elasticsearch
 ```Bash
