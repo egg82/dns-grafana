@@ -93,6 +93,16 @@ sudo touch /var/log/unbound.log
 sudo chown unbound:unbound /var/log/unbound.log
 ```
 
+Edit the file `/etc/apparmor.d/usr.sbin.unbound` and add the following line above the `#include <local/usr.sbin.unbound>` line:
+```
+/var/log/unbound.log rw,
+```
+
+Restart apparmor:
+```Bash
+sudo systemctl restart apparmor
+```
+
 Edit the file `/etc/sysctl.conf` and add (or edit) the following line:
 ```Conf
 net.core.rmem_max=8388608
