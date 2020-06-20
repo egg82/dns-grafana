@@ -87,6 +87,12 @@ forward-zone:
     forward-addr: 1.0.0.1@853#cloudflare-dns.com
 ```
 
+Create the log file:
+```Bash
+sudo touch /var/log/unbound.log
+sudo chown unbound:unbound /var/log/unbound.log
+```
+
 Edit the file `/etc/sysctl.conf` and add (or edit) the following line:
 ```Conf
 net.core.rmem_max=8388608
