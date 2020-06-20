@@ -307,7 +307,7 @@ curl -X PUT "http://localhost:9200/unbound/_mapping?pretty" -H 'Content-Type: ap
     "server": {
       "type": "keyword",
       "index": true,
-	  "null_value": ""
+      "null_value": ""
     },
     "type": {
       "type": "keyword",
