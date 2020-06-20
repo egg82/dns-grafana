@@ -1,6 +1,13 @@
 ## Notes
 This guide was designed for a fresh install of [Ubuntu server 20.04](https://ubuntu.com/download/server)
 
+### Install Python/deps
+```Bash
+sudo apt install python3 python3-pip python3-dev
+python3 -m pip install tailer
+python3 -m pip install python-dateutil
+```
+
 ### Install Unbound
 Install unbound
 ```Bash
