@@ -1,6 +1,8 @@
 ## Notes
 This guide was designed for a fresh install of [Ubuntu server 20.04](https://ubuntu.com/download/server)
 
+If using speedtest, it may behoove you to append `AND NOT remote:"<ip of speedtest server>"` to the `Lucene Query` section of your `CoreDNS Queries`, `Reponse Times`, `Errors`, `Activity`, `Domains`, and `Hosts` panels of your Grafana dashboard.
+
 ### Install Python/deps
 ```Bash
 sudo apt install python3 python3-pip python3-dev
