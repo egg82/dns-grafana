@@ -508,7 +508,7 @@
         ]
       },
       "gridPos": {
-        "h": 6,
+        "h": 7,
         "w": 12,
         "x": 12,
         "y": 9
@@ -562,7 +562,7 @@
       "type": "bargauge"
     },
     {
-      "datasource": "Unbound",
+      "datasource": "CoreDNS",
       "fieldConfig": {
         "defaults": {
           "custom": {
@@ -632,9 +632,9 @@
         "h": 6,
         "w": 12,
         "x": 12,
-        "y": 15
+        "y": 16
       },
-      "id": 24,
+      "id": 26,
       "options": {
         "displayMode": "basic",
         "orientation": "horizontal",
@@ -653,7 +653,7 @@
           "alias": "",
           "bucketAggs": [
             {
-              "field": "server",
+              "field": "host",
               "id": "2",
               "settings": {
                 "min_doc_count": 1,
@@ -678,7 +678,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Servers",
+      "title": "Hosts",
       "transformations": [],
       "type": "bargauge"
     },
@@ -821,7 +821,7 @@
       }
     },
     {
-      "datasource": "CoreDNS",
+      "datasource": "Unbound",
       "fieldConfig": {
         "defaults": {
           "custom": {
@@ -891,9 +891,9 @@
         "h": 6,
         "w": 12,
         "x": 12,
-        "y": 21
+        "y": 22
       },
-      "id": 8,
+      "id": 24,
       "options": {
         "displayMode": "basic",
         "orientation": "horizontal",
@@ -912,7 +912,7 @@
           "alias": "",
           "bucketAggs": [
             {
-              "field": "type",
+              "field": "server",
               "id": "2",
               "settings": {
                 "min_doc_count": 1,
@@ -937,7 +937,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Query Types",
+      "title": "Servers",
       "transformations": [],
       "type": "bargauge"
     },
@@ -1031,119 +1031,125 @@
       }
     },
     {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
       "datasource": "CoreDNS",
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "custom": {
+            "align": null
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "super-light-purple",
+                "value": null
+              },
+              {
+                "color": "super-light-blue",
+                "value": 20
+              },
+              {
+                "color": "light-blue",
+                "value": 30
+              },
+              {
+                "color": "light-green",
+                "value": 40
+              },
+              {
+                "color": "light-yellow",
+                "value": 50
+              },
+              {
+                "color": "dark-yellow",
+                "value": 60
+              },
+              {
+                "color": "semi-dark-orange",
+                "value": 70
+              },
+              {
+                "color": "red",
+                "value": 80
+              },
+              {
+                "color": "dark-red",
+                "value": 90
+              }
+            ]
+          },
+          "unit": "none"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Count"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "$__cell_0"
+              }
+            ]
+          }
+        ]
       },
-      "fill": 0,
-      "fillGradient": 0,
       "gridPos": {
-        "h": 8,
+        "h": 7,
         "w": 12,
         "x": 12,
-        "y": 27
+        "y": 28
       },
-      "hiddenSeries": false,
-      "id": 16,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "nullPointMode": "null",
+      "id": 8,
       "options": {
-        "dataLinks": []
+        "displayMode": "basic",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "distinctCount"
+          ],
+          "fields": "",
+          "values": true
+        },
+        "showUnfilled": false
       },
-      "percentage": false,
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
+      "pluginVersion": "7.0.3",
       "targets": [
         {
+          "alias": "",
           "bucketAggs": [
             {
-              "field": "date",
+              "field": "type",
               "id": "2",
               "settings": {
-                "interval": "1h",
-                "min_doc_count": 0,
-                "trimEdges": 0
+                "min_doc_count": 1,
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "0"
               },
-              "type": "date_histogram"
+              "type": "terms"
             }
           ],
           "metrics": [
             {
               "field": "select field",
               "id": "1",
-              "meta": {},
-              "settings": {},
               "type": "count"
             }
           ],
-          "query": "remote:\"10.0.0.3\"",
+          "query": "",
           "refId": "A",
           "timeField": "date"
         }
       ],
-      "thresholds": [],
       "timeFrom": null,
-      "timeRegions": [],
       "timeShift": null,
-      "title": "Old DNS Usage",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
+      "title": "Query Types",
       "transformations": [],
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
+      "type": "bargauge"
     },
     {
       "aliasColors": {},
@@ -1856,7 +1862,7 @@
       "type": "logs"
     }
   ],
-  "refresh": "",
+  "refresh": "5s",
   "schemaVersion": 25,
   "style": "dark",
   "tags": [],
@@ -1883,5 +1889,5 @@
   "timezone": "",
   "title": "DNS",
   "uid": "SsF-U4mMz",
-  "version": 52
+  "version": 56
 }
