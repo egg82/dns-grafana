@@ -319,6 +319,19 @@ curl -X PUT "http://localhost:9200/coredns/_mapping?pretty" -H 'Content-Type: ap
 curl -X GET "http://localhost:9200/coredns/_search?pretty"
 ```
 
+```Bash
+curl -X PUT "http://localhost:9200/coredns/_mapping?pretty" -H 'Content-Type: application/json' -d'
+{
+  "properties": {
+    "host": {
+      "type": "keyword",
+      "index": true
+    }
+  }
+}
+'
+```
+
 ### Unbound Elasticsearch
 ```Bash
 curl -X DELETE "http://localhost:9200/unbound?pretty"

@@ -8,6 +8,7 @@ from dateutil import tz
 import calendar
 
 DATE_PATTERN = "^([A-Za-z]+\s+\d+\s+\d+:\d+:\d+)\s+"
+HOST_PATTERN = "^([A-Za-z0-9\-\.]+)\s+"
 LEVEL_PATTERN = "\[([A-Z]+)\]\s+"
 REMOTE_PATTERN = "^([\d\.:]+):\d+\s+"
 TYPE_PATTERN = "\"([A-Z]+)\s+"
@@ -61,6 +62,13 @@ def main():
             date = datetime.fromtimestamp(calendar.timegm(datetime.strptime(str(datetime.now().year) + " " + split[1], "%Y %b %d %H:%M:%S").timetuple()), tz=tz.gettz("UTC")).strftime("%b %d, %Y at %I:%M:%S%p")
             line = split[2]
 
+            if not re.search(HOST_PATTERN, line):
+                continue
+
+            split = re.split(HOST_PATTERN, line)
+            host = split[1]
+            line = split[2]
+
             if not re.search(LEVEL_PATTERN, line):
                 continue
 
@@ -111,6 +119,7 @@ def main():
 
             params = {
                 "date": date,
+                "host": host,
                 "level": level,
                 "remote": remote,
                 "type": ltype,
