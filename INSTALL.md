@@ -6,6 +6,7 @@ This guide was designed for a fresh install of [Ubuntu server 20.04](https://ubu
 sudo apt install python3 python3-pip python3-dev
 python3 -m pip install tailer
 python3 -m pip install python-dateutil
+python3 -m pip install speedtest-cli
 ```
 
 ### Install Unbound
@@ -353,4 +354,42 @@ curl -X PUT "http://localhost:9200/unbound/_mapping?pretty" -H 'Content-Type: ap
 }
 '
 curl -X GET "http://localhost:9200/unbound/_search?pretty"
+```
+
+### Speedtest Elasticsearch
+```Bash
+curl -X DELETE "http://localhost:9200/speedtest?pretty"
+curl -X PUT "http://localhost:9200/speedtest?pretty"
+curl -X PUT "http://localhost:9200/speedtest/_mapping?pretty" -H 'Content-Type: application/json' -d'
+{
+  "properties": {
+    "download": {
+      "type": "double",
+      "index": true
+    },
+    "upload": {
+      "type": "double",
+      "index": true
+    },
+    "ping": {
+      "type": "double",
+      "index": true
+    },
+    "ip": {
+      "type": "keyword",
+      "index": true
+    },
+    "host": {
+      "type": "keyword",
+      "index": true
+    },
+    "date": {
+      "type": "date",
+      "index": true,
+      "format": "MMM d, yyyy '\''at'\'' hh:mm:ssa"
+    }
+  }
+}
+'
+curl -X GET "http://localhost:9200/speedtest/_search?pretty"
 ```
