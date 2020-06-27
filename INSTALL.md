@@ -393,3 +393,20 @@ curl -X PUT "http://localhost:9200/speedtest/_mapping?pretty" -H 'Content-Type: 
 '
 curl -X GET "http://localhost:9200/speedtest/_search?pretty"
 ```
+
+### Crontab
+If desired, you can have the `.sh` files run on startup for easy automation.
+
+First, edit your user's crontab (you don't need to be root to run these scripts provided you set up permissions correctly):
+```Bash
+crontab -e
+```
+
+Then, add the following to the bottom of the crontab file:
+```
+@reboot /path/to/dns-grafana/coredns.sh
+@reboot /path/to/dns-grafana/unbound.sh
+@reboot /path/to/dns-grafana/speedtest.sh
+```
+
+And you're done!
