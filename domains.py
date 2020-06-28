@@ -12,7 +12,7 @@ import signal
 from pathlib import Path
 
 HOME = str(Path.home())
-HOST_PATTERN = "^([a-zA-Z0-9\-\.]+):\d+$"
+HOST_PATTERN = "([a-zA-Z0-9\-\.]+)"
 
 ELASTICSEARCH_URL = "http://localhost:9200/domains"
 POST_HEADERS = {
@@ -69,8 +69,18 @@ def parse_data(text, domain_type):
         if line is None or len(line) == 0 or line.startswith("[") or line.startswith("!"):
             continue
 
+        if not re.search(HOST_PATTERN, line):
+            continue
+        
+        host = None
+        hosts = re.split(HOST_PATTERN, line)
+        if hosts[0] == "0.0.0.0":
+            host = hosts[1]
+        else:
+            host = hosts[0]
+
         params = {
-            "host": line,
+            "host": host,
             "type": domain_type,
             "date": date
         }
