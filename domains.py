@@ -74,10 +74,10 @@ def parse_data(text, domain_type):
         
         host = None
         hosts = re.split(HOST_PATTERN, line)
-        if hosts[0] == "0.0.0.0":
-            host = hosts[1]
+        if hosts[1] == "0.0.0.0":
+            host = hosts[2]
         else:
-            host = hosts[0]
+            host = hosts[1]
 
         params = {
             "host": host,
