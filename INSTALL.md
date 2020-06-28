@@ -9,6 +9,7 @@ sudo apt install python3 python3-pip python3-dev
 python3 -m pip install tailer
 python3 -m pip install python-dateutil
 python3 -m pip install speedtest-cli
+python3 -m pip install validators
 ```
 
 ### Install Unbound
