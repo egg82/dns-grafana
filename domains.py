@@ -10,6 +10,7 @@ import time
 from threading import Event
 import signal
 from pathlib import Path
+import validators
 
 HOME = str(Path.home())
 HOST_PATTERN = "([a-zA-Z0-9\-\.]+)"
@@ -66,7 +67,7 @@ def parse_data(text, domain_type):
 
     for line in text.splitlines():
         line = line.strip()
-        if line is None or len(line) == 0 or line.startswith("[") or line.startswith("!"):
+        if len(line) == 0 or line.startswith("[") or line.startswith("!") or line.startswith("-"):
             continue
 
         if not re.search(HOST_PATTERN, line):
@@ -74,10 +75,13 @@ def parse_data(text, domain_type):
         
         host = None
         hosts = re.split(HOST_PATTERN, line)
-        if hosts[1] == "0.0.0.0":
-            host = hosts[2]
-        else:
-            host = hosts[1]
+        for h in hosts:
+            h = h.strip()
+            if len(h) == 0 or h == "0.0.0.0" or h == "href" or h.startswith("http"):
+                continue
+            if not validators.domain(h):
+                continue
+            host = h
 
         params = {
             "host": host,
