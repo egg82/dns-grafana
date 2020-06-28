@@ -87,7 +87,7 @@ def parse_data(text, domain_type):
 
         #print(json.dumps(params, indent=2))
         #print("host=" + host)
-        submit_data(line, ELASTICSEARCH_URL + "/_doc/", params)
+        submit_data(host, ELASTICSEARCH_URL + "/_doc/", params)
 
 def main():
     params = {
