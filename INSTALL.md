@@ -434,16 +434,6 @@ curl -X PUT "http://localhost:9200/domains/_mapping?pretty" -H 'Content-Type: ap
 }
 '
 curl -X GET "http://localhost:9200/domains/_search?pretty"
-
-curl -X POST "http://localhost:9200/_aliases?pretty" -H 'Content-Type: application/json' -d'
-{
-    "actions" : [
-        { "add" : { "index" : "domains", "alias" : "domain_search" } },
-        { "add" : { "index" : "coredns", "alias" : "domain_search" } },
-        { "add" : { "index" : "unbound", "alias" : "domain_search" } }
-    ]
-}
-'
 ```
 
 ### Crontab

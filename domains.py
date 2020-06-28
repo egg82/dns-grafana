@@ -62,6 +62,54 @@ def get_data(url):
     else:
         return req.text
 
+def get_text(request):
+    text = request.text
+    if text is None:
+        return None
+    
+    try:
+        return json.loads(text)
+    except ValueError:
+        return None
+    return None
+
+def data_exists(host):
+    tries = 0
+
+    params = {
+        "query": {
+            "term": {
+                "host": {
+                    "value": host
+                }
+            }
+        }
+    }
+
+    response = None
+    while True:
+        req = requests.get(ELASTICSEARCH_URL + "/_search", headers=POST_HEADERS, json=params)
+        if req.status_code == 429:
+            time.sleep(0.5)
+        else:
+            response = get_text(req)
+            if not response is None:
+                break
+            elif response is None and tries >= 3:
+                break
+            else:
+                tries += 1
+                time.sleep(3.0)
+    
+    if response is None:
+        print("Failed to get response, skipping..")
+        add_failure(json.dumps(params))
+        return False
+
+    if response["hits"]["total"]["value"] > 0:
+        return True
+    return False
+
 def parse_data(text, domain_type):
     date = datetime.fromtimestamp(calendar.timegm(datetime.utcnow().timetuple()), tz=tz.gettz("UTC")).strftime("%b %d, %Y at %I:%M:%S%p")
 
@@ -84,6 +132,10 @@ def parse_data(text, domain_type):
             host = h
         
         if host is None:
+            continue
+
+        if data_exists(host):
+            print("Domain " + host + " already exists, skipping..")
             continue
 
         params = {
