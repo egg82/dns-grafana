@@ -409,6 +409,32 @@ curl -X PUT "http://localhost:9200/speedtest/_mapping?pretty" -H 'Content-Type: 
 curl -X GET "http://localhost:9200/speedtest/_search?pretty"
 ```
 
+### Bad domain Elasticsearch
+```Bash
+curl -X DELETE "http://localhost:9200/domains?pretty"
+curl -X PUT "http://localhost:9200/domains?pretty"
+curl -X PUT "http://localhost:9200/domains/_mapping?pretty" -H 'Content-Type: application/json' -d'
+{
+  "properties": {
+    "host": {
+      "type": "keyword",
+      "index": true
+    },
+    "type": {
+      "type": "keyword",
+      "index": true
+    },
+    "date": {
+      "type": "date",
+      "index": true,
+      "format": "MMM d, yyyy '\''at'\'' hh:mm:ssa"
+    }
+  }
+}
+'
+curl -X GET "http://localhost:9200/domains/_search?pretty"
+```
+
 ### Crontab
 If desired, you can have the `.sh` files run on startup for easy automation.
 
@@ -422,6 +448,7 @@ Then, add the following to the bottom of the crontab file:
 @reboot /path/to/dns-grafana/coredns.sh
 @reboot /path/to/dns-grafana/unbound.sh
 @reboot /path/to/dns-grafana/speedtest.sh
+0 * * * * /path/to/dns-grafana/domains.sh
 ```
 
 And you're done!
