@@ -82,6 +82,9 @@ def parse_data(text, domain_type):
             if not validators.domain(h):
                 continue
             host = h
+        
+        if host is None:
+            continue
 
         params = {
             "host": host,
