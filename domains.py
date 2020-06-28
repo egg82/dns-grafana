@@ -46,8 +46,8 @@ def submit_data(item_id, url, params):
     else:
         print("Posted " + item_id + " to Elasticsearch!")
 
-def delete_data(url):
-    req = requests.delete(url, headers=POST_HEADERS)
+def delete_data(url, params):
+    req = requests.post(url, headers=POST_HEADERS, json=params)
     if req.status_code < 200 or req.status_code >= 300:
         print("Got status code " + str(req.status_code) + " for " + url)
     else:
@@ -80,7 +80,12 @@ def parse_data(text, domain_type):
         submit_data(line, ELASTICSEARCH_URL + "/_doc/", params)
 
 def main():
-    delete_data(ELASTICSEARCH_URL + "/_doc/*")
+    params = {
+        "query": {
+            "match_all": {}
+        }
+    }
+    delete_data(ELASTICSEARCH_URL + "/_delete_by_query?conflicts=proceed", params)
 
     # Malware
 
