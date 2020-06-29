@@ -177,10 +177,22 @@ sudo mkdir -p /etc/coredns
 
 Create the file `/etc/coredns/Corefile` and add the following, adjusting for your subnet:
 ```
-.:53 {
-        forward . 127.0.0.1:5353
+internal.net 192.168.0.0/16 {
         file /etc/coredns/db.internal.net       internal.net
         file /etc/coredns/db.192.168            192.168.in-addr.arpa
+        nsid Internal home network
+        dnssec
+
+        cache
+        cancel
+        bufsize 1232
+
+        log
+        errors
+}
+
+.:53 {
+        forward . 127.0.0.1:5353
         nsid Internal home network
         dnssec
 
