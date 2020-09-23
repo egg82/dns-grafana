@@ -16,7 +16,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 10,
-  "iteration": 1600904791988,
+  "iteration": 1600904792062,
   "links": [],
   "panels": [
     {
@@ -374,7 +374,7 @@
               "type": "avg"
             }
           ],
-          "query": "dnssec:$dnssec AND name:uss.enterprise OR name:*.uss.enterprise AND NOT remote:\"127.0.0.1\" AND host:$host AND code:$code AND remote:$remote AND name:$name",
+          "query": "dnssec:$dnssec AND (name:uss.enterprise OR name:*.uss.enterprise) AND NOT remote:\"127.0.0.1\" AND host:$host AND code:$code AND remote:$remote AND name:$name",
           "refId": "A",
           "timeField": "date"
         },
@@ -401,7 +401,7 @@
               "type": "avg"
             }
           ],
-          "query": "dnssec:$dnssec AND NOT name:uss.enterprise AND NOT name:*.uss.enterprise AND NOT remote:\"127.0.0.1\" AND host:$host AND code:$code AND remote:$remote AND name:$name",
+          "query": "dnssec:$dnssec AND (NOT name:uss.enterprise AND NOT name:*.uss.enterprise) AND NOT remote:\"127.0.0.1\" AND host:$host AND code:$code AND remote:$remote AND name:$name",
           "refId": "B",
           "timeField": "date"
         },
@@ -432,7 +432,7 @@
               "type": "percentiles"
             }
           ],
-          "query": "dnssec:$dnssec AND name:uss.enterprise OR name:*.uss.enterprise AND NOT remote:\"127.0.0.1\" AND host:$host AND code:$code AND remote:$remote AND name:$name",
+          "query": "dnssec:$dnssec AND (name:uss.enterprise OR name:*.uss.enterprise) AND NOT remote:\"127.0.0.1\" AND host:$host AND code:$code AND remote:$remote AND name:$name",
           "refId": "C",
           "timeField": "date"
         },
@@ -463,7 +463,7 @@
               "type": "percentiles"
             }
           ],
-          "query": "dnssec:$dnssec AND NOT name:uss.enterprise AND NOT name:*.uss.enterprise AND NOT remote:\"127.0.0.1\" AND host:$host AND code:$code AND remote:$remote AND name:$name",
+          "query": "dnssec:$dnssec AND (NOT name:uss.enterprise AND NOT name:*.uss.enterprise) AND NOT remote:\"127.0.0.1\" AND host:$host AND code:$code AND remote:$remote AND name:$name",
           "refId": "D",
           "timeField": "date"
         }
@@ -1960,5 +1960,5 @@
   "timezone": "",
   "title": "DNS",
   "uid": "SsF-U4mMz",
-  "version": 12
+  "version": 13
 }
