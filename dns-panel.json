@@ -15,7 +15,8 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 1,
+  "id": 10,
+  "iteration": 1600904791988,
   "links": [],
   "panels": [
     {
@@ -26,7 +27,8 @@
       "datasource": "CoreDNS",
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "custom": {},
+          "links": []
         },
         "overrides": []
       },
@@ -53,9 +55,10 @@
       "linewidth": 1,
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "7.2.0",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -87,7 +90,7 @@
               "type": "count"
             }
           ],
-          "query": "NOT remote:\"127.0.0.1\"",
+          "query": "NOT remote:\"127.0.0.1\" AND host:$host AND code:$code AND remote:$remote AND name:$name",
           "refId": "A",
           "timeField": "date"
         },
@@ -112,7 +115,7 @@
               "type": "count"
             }
           ],
-          "query": "dnssec:true AND NOT remote:\"127.0.0.1\"",
+          "query": "dnssec:true AND NOT remote:\"127.0.0.1\" AND host:$host AND code:$code AND remote:$remote AND name:$name",
           "refId": "B",
           "timeField": "date"
         }
@@ -166,7 +169,8 @@
       "datasource": "Unbound",
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "custom": {},
+          "links": []
         },
         "overrides": []
       },
@@ -193,9 +197,10 @@
       "linewidth": 1,
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "7.2.0",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -227,6 +232,7 @@
               "type": "count"
             }
           ],
+          "query": "name:$name",
           "refId": "A",
           "timeField": "date"
         },
@@ -251,7 +257,7 @@
               "type": "count"
             }
           ],
-          "query": "dnssec:true",
+          "query": "dnssec:true AND name:$name",
           "refId": "B",
           "timeField": "date"
         }
@@ -260,7 +266,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Unbound Queries",
+      "title": "Unbound Responses",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -305,7 +311,8 @@
       "datasource": "CoreDNS",
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "custom": {},
+          "links": []
         },
         "overrides": []
       },
@@ -332,9 +339,10 @@
       "linewidth": 1,
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "7.2.0",
       "pointradius": 0.5,
       "points": false,
       "renderer": "flot",
@@ -366,7 +374,7 @@
               "type": "avg"
             }
           ],
-          "query": "name:uss.enterprise OR name:*.uss.enterprise AND NOT remote:\"127.0.0.1\"",
+          "query": "dnssec:$dnssec AND name:uss.enterprise OR name:*.uss.enterprise AND NOT remote:\"127.0.0.1\" AND host:$host AND code:$code AND remote:$remote AND name:$name",
           "refId": "A",
           "timeField": "date"
         },
@@ -393,8 +401,70 @@
               "type": "avg"
             }
           ],
-          "query": "NOT name:uss.enterprise AND NOT name:*.uss.enterprise AND NOT remote:\"127.0.0.1\"",
+          "query": "dnssec:$dnssec AND NOT name:uss.enterprise AND NOT name:*.uss.enterprise AND NOT remote:\"127.0.0.1\" AND host:$host AND code:$code AND remote:$remote AND name:$name",
           "refId": "B",
+          "timeField": "date"
+        },
+        {
+          "alias": "Local 95%",
+          "bucketAggs": [
+            {
+              "field": "date",
+              "id": "2",
+              "settings": {
+                "interval": "1h",
+                "min_doc_count": 0,
+                "trimEdges": 0
+              },
+              "type": "date_histogram"
+            }
+          ],
+          "metrics": [
+            {
+              "field": "duration",
+              "id": "1",
+              "meta": {},
+              "settings": {
+                "percents": [
+                  "95"
+                ]
+              },
+              "type": "percentiles"
+            }
+          ],
+          "query": "dnssec:$dnssec AND name:uss.enterprise OR name:*.uss.enterprise AND NOT remote:\"127.0.0.1\" AND host:$host AND code:$code AND remote:$remote AND name:$name",
+          "refId": "C",
+          "timeField": "date"
+        },
+        {
+          "alias": "Remote 95%",
+          "bucketAggs": [
+            {
+              "field": "date",
+              "id": "2",
+              "settings": {
+                "interval": "1h",
+                "min_doc_count": 0,
+                "trimEdges": 0
+              },
+              "type": "date_histogram"
+            }
+          ],
+          "metrics": [
+            {
+              "field": "duration",
+              "id": "1",
+              "meta": {},
+              "settings": {
+                "percents": [
+                  "95"
+                ]
+              },
+              "type": "percentiles"
+            }
+          ],
+          "query": "dnssec:$dnssec AND NOT name:uss.enterprise AND NOT name:*.uss.enterprise AND NOT remote:\"127.0.0.1\" AND host:$host AND code:$code AND remote:$remote AND name:$name",
+          "refId": "D",
           "timeField": "date"
         }
       ],
@@ -526,7 +596,7 @@
         },
         "showUnfilled": false
       },
-      "pluginVersion": "7.0.3",
+      "pluginVersion": "7.2.0",
       "targets": [
         {
           "alias": "",
@@ -550,7 +620,7 @@
               "type": "count"
             }
           ],
-          "query": "",
+          "query": "dnssec:$dnssec AND host:$host AND code:$code AND remote:$remote AND name:$name",
           "refId": "A",
           "timeField": "date"
         }
@@ -647,7 +717,7 @@
         },
         "showUnfilled": false
       },
-      "pluginVersion": "7.0.3",
+      "pluginVersion": "7.2.0",
       "targets": [
         {
           "alias": "",
@@ -671,14 +741,14 @@
               "type": "count"
             }
           ],
-          "query": "",
+          "query": "dnssec:$dnssec AND host:$host AND code:$code AND remote:$remote AND name:$name",
           "refId": "A",
           "timeField": "date"
         }
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Hosts",
+      "title": "Internal DNS Servers",
       "transformations": [],
       "type": "bargauge"
     },
@@ -690,7 +760,8 @@
       "datasource": "CoreDNS",
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "custom": {},
+          "links": []
         },
         "overrides": []
       },
@@ -717,9 +788,10 @@
       "linewidth": 1,
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "7.2.0",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -749,7 +821,7 @@
               "type": "count"
             }
           ],
-          "query": "code:\"SERVFAIL\"",
+          "query": "dnssec:$dnssec AND code:\"SERVFAIL\" AND host:$host AND remote:$remote AND name:$name",
           "refId": "A",
           "timeField": "date"
         },
@@ -774,7 +846,7 @@
               "type": "count"
             }
           ],
-          "query": "code:\"NXDOMAIN\"",
+          "query": "dnssec:$dnssec AND code:\"NXDOMAIN\" AND host:$host AND remote:$remote AND name:$name",
           "refId": "B",
           "timeField": "date"
         }
@@ -906,7 +978,7 @@
         },
         "showUnfilled": false
       },
-      "pluginVersion": "7.0.3",
+      "pluginVersion": "7.2.0",
       "targets": [
         {
           "alias": "",
@@ -930,14 +1002,14 @@
               "type": "count"
             }
           ],
-          "query": "",
+          "query": "dnssec:$dnssec AND name:$name",
           "refId": "A",
           "timeField": "date"
         }
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Servers",
+      "title": "Upstream DNS Servers",
       "transformations": [],
       "type": "bargauge"
     },
@@ -1006,7 +1078,7 @@
               "type": "count"
             }
           ],
-          "query": "NOT remote:\"127.0.0.1\"",
+          "query": "dnssec:$dnssec AND NOT remote:\"127.0.0.1\" AND host:$host AND code:$code AND remote:$remote AND name:$name",
           "refId": "A",
           "timeField": "date"
         }
@@ -1116,7 +1188,7 @@
         },
         "showUnfilled": false
       },
-      "pluginVersion": "7.0.3",
+      "pluginVersion": "7.2.0",
       "targets": [
         {
           "alias": "",
@@ -1140,7 +1212,7 @@
               "type": "count"
             }
           ],
-          "query": "",
+          "query": "dnssec:$dnssec AND host:$host AND code:$code AND remote:$remote AND name:$name",
           "refId": "A",
           "timeField": "date"
         }
@@ -1281,14 +1353,14 @@
               "type": "count"
             }
           ],
-          "query": "NOT remote:\"127.0.0.1\"",
+          "query": "dnssec:$dnssec AND NOT remote:\"127.0.0.1\" AND host:$host AND code:$code AND remote:$remote AND name:$name",
           "refId": "A",
           "timeField": "date"
         }
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Domains",
+      "title": "CoreDNS Domains",
       "transformations": [],
       "type": "grafana-piechart-panel",
       "valueName": "total"
@@ -1301,7 +1373,7 @@
         "label": "Others",
         "threshold": 0
       },
-      "datasource": "CoreDNS",
+      "datasource": "Unbound",
       "fieldConfig": {
         "defaults": {
           "custom": {
@@ -1375,7 +1447,7 @@
         "x": 12,
         "y": 35
       },
-      "id": 11,
+      "id": 22,
       "interval": null,
       "legend": {
         "percentage": true,
@@ -1395,7 +1467,7 @@
           "bucketAggs": [
             {
               "fake": true,
-              "field": "remote",
+              "field": "name",
               "id": "3",
               "settings": {
                 "min_doc_count": 1,
@@ -1423,14 +1495,14 @@
               "type": "count"
             }
           ],
-          "query": "NOT remote:\"127.0.0.1\"",
+          "query": "dnssec:$dnssec AND name:$name",
           "refId": "A",
           "timeField": "date"
         }
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Hosts",
+      "title": "Unbound Domains",
       "transformations": [],
       "type": "grafana-piechart-panel",
       "valueName": "total"
@@ -1443,7 +1515,7 @@
         "label": "Others",
         "threshold": 0
       },
-      "datasource": "Unbound",
+      "datasource": "CoreDNS",
       "fieldConfig": {
         "defaults": {
           "custom": {
@@ -1517,7 +1589,7 @@
         "x": 0,
         "y": 49
       },
-      "id": 22,
+      "id": 11,
       "interval": null,
       "legend": {
         "percentage": true,
@@ -1537,7 +1609,7 @@
           "bucketAggs": [
             {
               "fake": true,
-              "field": "name",
+              "field": "remote",
               "id": "3",
               "settings": {
                 "min_doc_count": 1,
@@ -1565,156 +1637,14 @@
               "type": "count"
             }
           ],
-          "query": "dnssec:true",
+          "query": "dnssec:$dnssec AND NOT remote:\"127.0.0.1\" AND host:$host AND code:$code AND remote:$remote AND name:$name",
           "refId": "A",
           "timeField": "date"
         }
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "DNSSEC Domains",
-      "transformations": [],
-      "type": "grafana-piechart-panel",
-      "valueName": "total"
-    },
-    {
-      "aliasColors": {},
-      "breakPoint": "50%",
-      "cacheTimeout": null,
-      "combine": {
-        "label": "Others",
-        "threshold": 0
-      },
-      "datasource": "Unbound",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {
-            "align": null
-          },
-          "links": [],
-          "mappings": [],
-          "thresholds": {
-            "mode": "percentage",
-            "steps": [
-              {
-                "color": "super-light-purple",
-                "value": null
-              },
-              {
-                "color": "super-light-blue",
-                "value": 20
-              },
-              {
-                "color": "light-blue",
-                "value": 30
-              },
-              {
-                "color": "light-green",
-                "value": 40
-              },
-              {
-                "color": "light-yellow",
-                "value": 50
-              },
-              {
-                "color": "dark-yellow",
-                "value": 60
-              },
-              {
-                "color": "semi-dark-orange",
-                "value": 70
-              },
-              {
-                "color": "red",
-                "value": 80
-              },
-              {
-                "color": "dark-red",
-                "value": 90
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Count"
-            },
-            "properties": [
-              {
-                "id": "displayName",
-                "value": "$__cell_0"
-              }
-            ]
-          }
-        ]
-      },
-      "fontSize": "80%",
-      "format": "none",
-      "gridPos": {
-        "h": 14,
-        "w": 12,
-        "x": 12,
-        "y": 49
-      },
-      "id": 23,
-      "interval": null,
-      "legend": {
-        "percentage": true,
-        "show": true,
-        "values": true
-      },
-      "legendType": "Right side",
-      "links": [],
-      "maxDataPoints": 1,
-      "nullPointMode": "connected",
-      "pieType": "pie",
-      "pluginVersion": "7.0.3",
-      "strokeWidth": 1,
-      "targets": [
-        {
-          "alias": "",
-          "bucketAggs": [
-            {
-              "fake": true,
-              "field": "name",
-              "id": "3",
-              "settings": {
-                "min_doc_count": 1,
-                "order": "desc",
-                "orderBy": "_count",
-                "size": "20"
-              },
-              "type": "terms"
-            },
-            {
-              "field": "date",
-              "id": "2",
-              "settings": {
-                "interval": "1d",
-                "min_doc_count": 0,
-                "trimEdges": 0
-              },
-              "type": "date_histogram"
-            }
-          ],
-          "metrics": [
-            {
-              "field": "select field",
-              "id": "1",
-              "type": "count"
-            }
-          ],
-          "query": "dnssec:false",
-          "refId": "A",
-          "timeField": "date"
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Insecure Domains",
+      "title": "Remotes",
       "transformations": [],
       "type": "grafana-piechart-panel",
       "valueName": "total"
@@ -1780,6 +1710,7 @@
               "type": "logs"
             }
           ],
+          "query": "dnssec:$dnssec AND host:$host AND code:$code AND remote:$remote AND name:$name",
           "refId": "A",
           "timeField": "date"
         }
@@ -1851,6 +1782,7 @@
               "type": "logs"
             }
           ],
+          "query": "dnssec:$dnssec AND name:$name",
           "refId": "A",
           "timeField": "date"
         }
@@ -1862,12 +1794,151 @@
       "type": "logs"
     }
   ],
-  "refresh": "5s",
-  "schemaVersion": 25,
+  "refresh": "10s",
+  "schemaVersion": 26,
   "style": "dark",
   "tags": [],
   "templating": {
-    "list": []
+    "list": [
+      {
+        "allValue": "*",
+        "current": {
+          "selected": false,
+          "text": "All",
+          "value": "$__all"
+        },
+        "datasource": "CoreDNS",
+        "definition": "{\"find\": \"terms\", \"field\": \"host\", \"size\": 1000, \"orderBy\": \"doc_count\"}",
+        "hide": 0,
+        "includeAll": true,
+        "label": "DNS Servers",
+        "multi": false,
+        "name": "host",
+        "options": [],
+        "query": "{\"find\": \"terms\", \"field\": \"host\", \"size\": 1000, \"orderBy\": \"doc_count\"}",
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": "*",
+        "current": {
+          "selected": false,
+          "text": "All",
+          "value": "$__all"
+        },
+        "datasource": "CoreDNS",
+        "definition": "{\"find\": \"terms\", \"field\": \"remote\", \"size\": 1000, \"orderBy\": \"doc_count\"}",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Remotes",
+        "multi": false,
+        "name": "remote",
+        "options": [],
+        "query": "{\"find\": \"terms\", \"field\": \"remote\", \"size\": 1000, \"orderBy\": \"doc_count\"}",
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": "*",
+        "current": {
+          "selected": false,
+          "text": "All",
+          "value": "$__all"
+        },
+        "datasource": "CoreDNS",
+        "definition": "{\"find\": \"terms\", \"field\": \"code\", \"size\": 1000, \"orderBy\": \"doc_count\"}",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Responses",
+        "multi": false,
+        "name": "code",
+        "options": [],
+        "query": "{\"find\": \"terms\", \"field\": \"code\", \"size\": 1000, \"orderBy\": \"doc_count\"}",
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": "*",
+        "current": {
+          "selected": true,
+          "text": "All",
+          "value": "$__all"
+        },
+        "hide": 0,
+        "includeAll": true,
+        "label": "DNSSEC",
+        "multi": false,
+        "name": "dnssec",
+        "options": [
+          {
+            "selected": true,
+            "text": "All",
+            "value": "$__all"
+          },
+          {
+            "selected": false,
+            "text": "true",
+            "value": "true"
+          },
+          {
+            "selected": false,
+            "text": "false",
+            "value": "false"
+          }
+        ],
+        "query": "true,false",
+        "queryValue": "",
+        "skipUrlSync": false,
+        "type": "custom"
+      },
+      {
+        "allValue": "*",
+        "current": {
+          "selected": false,
+          "text": "All",
+          "value": "$__all"
+        },
+        "datasource": "CoreDNS",
+        "definition": "{\"find\": \"terms\", \"field\": \"name\", \"size\": 1000, \"orderBy\": \"doc_count\", \"query\": \"dnssec:$dnssec AND host:$host AND code:$code AND remote:$remote\"}",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Domain",
+        "multi": false,
+        "name": "name",
+        "options": [],
+        "query": "{\"find\": \"terms\", \"field\": \"name\", \"size\": 1000, \"orderBy\": \"doc_count\", \"query\": \"dnssec:$dnssec AND host:$host AND code:$code AND remote:$remote\"}",
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      }
+    ]
   },
   "time": {
     "from": "now-7d",
@@ -1889,5 +1960,5 @@
   "timezone": "",
   "title": "DNS",
   "uid": "SsF-U4mMz",
-  "version": 56
+  "version": 12
 }
