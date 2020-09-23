@@ -111,7 +111,7 @@ def data_exists(host):
     return False
 
 def parse_data(text, domain_type):
-    date = datetime.fromtimestamp(calendar.timegm(datetime.utcnow().timetuple()), tz=tz.gettz("UTC")).strftime("%b %d, %Y at %I:%M:%S%p")
+    date = datetime.fromtimestamp(calendar.timegm(datetime.utcnow().timetuple()), tz=tz.gettz("UTC")).strftime("%Y-%m-%d %H:%M:%S")
 
     for line in text.splitlines():
         line = line.strip()

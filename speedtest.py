@@ -60,7 +60,7 @@ def main():
             except json.JSONDecodeError:
                 return
 
-            date = datetime.fromtimestamp(calendar.timegm(datetime.strptime(j["timestamp"], "%Y-%m-%dT%H:%M:%S.%fZ").timetuple()), tz=tz.gettz("UTC")).strftime("%b %d, %Y at %I:%M:%S%p")
+            date = datetime.fromtimestamp(calendar.timegm(datetime.strptime(j["timestamp"], "%Y-%m-%dT%H:%M:%S.%fZ").timetuple()), tz=tz.gettz("UTC")).strftime("%Y-%m-%d %H:%M:%S")
             download = j["download"]
             upload = j["upload"]
             ping = j["ping"]

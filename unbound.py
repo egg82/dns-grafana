@@ -96,7 +96,7 @@ def main():
                     continue
 
                 split = re.split(DATE_PATTERN, line)
-                date = datetime.fromtimestamp(calendar.timegm(datetime.strptime(str(datetime.now().year) + " " + split[1], "%Y %b %d %H:%M:%S").timetuple()), tz=tz.gettz("UTC")).strftime("%b %d, %Y at %I:%M:%S%p")
+                date = datetime.fromtimestamp(calendar.timegm(datetime.strptime(str(datetime.now().year) + " " + split[1], "%Y %b %d %H:%M:%S").timetuple()), tz=tz.gettz("UTC")).strftime("%Y-%m-%d %H:%M:%S")
                 line = split[2]
 
             if level is None:
