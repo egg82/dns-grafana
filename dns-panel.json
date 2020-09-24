@@ -16,7 +16,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 10,
-  "iteration": 1600904792268,
+  "iteration": 1600906758871,
   "links": [],
   "panels": [
     {
@@ -489,7 +489,6 @@
       },
       "yaxes": [
         {
-          "decimals": null,
           "format": "ms",
           "label": null,
           "logBase": 1,
@@ -1951,8 +1950,8 @@
         "options": [
           {
             "selected": true,
-            "text": "0",
-            "value": "0"
+            "text": "500",
+            "value": "500"
           }
         ],
         "query": "0",
@@ -1962,7 +1961,7 @@
     ]
   },
   "time": {
-    "from": "now-24h",
+    "from": "now-7d",
     "to": "now"
   },
   "timepicker": {
@@ -1981,5 +1980,5 @@
   "timezone": "",
   "title": "DNS",
   "uid": "SsF-U4mMz",
-  "version": 16
+  "version": 17
 }
