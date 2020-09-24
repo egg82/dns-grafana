@@ -16,7 +16,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 10,
-  "iteration": 1600904792062,
+  "iteration": 1600904792268,
   "links": [],
   "panels": [
     {
@@ -90,7 +90,7 @@
               "type": "count"
             }
           ],
-          "query": "NOT remote:\"127.0.0.1\" AND host:$host AND code:$code AND remote:$remote AND name:$name",
+          "query": "duration:>=$min AND NOT remote:\"127.0.0.1\" AND host:$host AND code:$code AND remote:$remote AND name:$name",
           "refId": "A",
           "timeField": "date"
         },
@@ -115,7 +115,7 @@
               "type": "count"
             }
           ],
-          "query": "dnssec:true AND NOT remote:\"127.0.0.1\" AND host:$host AND code:$code AND remote:$remote AND name:$name",
+          "query": "dnssec:true AND duration:>=$min AND NOT remote:\"127.0.0.1\" AND host:$host AND code:$code AND remote:$remote AND name:$name",
           "refId": "B",
           "timeField": "date"
         }
@@ -489,6 +489,7 @@
       },
       "yaxes": [
         {
+          "decimals": null,
           "format": "ms",
           "label": null,
           "logBase": 1,
@@ -620,7 +621,7 @@
               "type": "count"
             }
           ],
-          "query": "dnssec:$dnssec AND host:$host AND code:$code AND remote:$remote AND name:$name",
+          "query": "dnssec:$dnssec AND duration:>=$min AND host:$host AND code:$code AND remote:$remote AND name:$name",
           "refId": "A",
           "timeField": "date"
         }
@@ -741,7 +742,7 @@
               "type": "count"
             }
           ],
-          "query": "dnssec:$dnssec AND host:$host AND code:$code AND remote:$remote AND name:$name",
+          "query": "dnssec:$dnssec AND duration:>=$min AND host:$host AND code:$code AND remote:$remote AND name:$name",
           "refId": "A",
           "timeField": "date"
         }
@@ -821,7 +822,7 @@
               "type": "count"
             }
           ],
-          "query": "dnssec:$dnssec AND code:\"SERVFAIL\" AND host:$host AND remote:$remote AND name:$name",
+          "query": "dnssec:$dnssec AND duration:>=$min AND code:\"SERVFAIL\" AND host:$host AND remote:$remote AND name:$name",
           "refId": "A",
           "timeField": "date"
         },
@@ -846,7 +847,7 @@
               "type": "count"
             }
           ],
-          "query": "dnssec:$dnssec AND code:\"NXDOMAIN\" AND host:$host AND remote:$remote AND name:$name",
+          "query": "dnssec:$dnssec AND duration:>=$min AND code:\"NXDOMAIN\" AND host:$host AND remote:$remote AND name:$name",
           "refId": "B",
           "timeField": "date"
         }
@@ -1078,7 +1079,7 @@
               "type": "count"
             }
           ],
-          "query": "dnssec:$dnssec AND NOT remote:\"127.0.0.1\" AND host:$host AND code:$code AND remote:$remote AND name:$name",
+          "query": "dnssec:$dnssec AND duration:>=$min AND NOT remote:\"127.0.0.1\" AND host:$host AND code:$code AND remote:$remote AND name:$name",
           "refId": "A",
           "timeField": "date"
         }
@@ -1212,7 +1213,7 @@
               "type": "count"
             }
           ],
-          "query": "dnssec:$dnssec AND host:$host AND code:$code AND remote:$remote AND name:$name",
+          "query": "dnssec:$dnssec AND duration:>=$min AND host:$host AND code:$code AND remote:$remote AND name:$name",
           "refId": "A",
           "timeField": "date"
         }
@@ -1353,7 +1354,7 @@
               "type": "count"
             }
           ],
-          "query": "dnssec:$dnssec AND NOT remote:\"127.0.0.1\" AND host:$host AND code:$code AND remote:$remote AND name:$name",
+          "query": "dnssec:$dnssec AND duration:>=$min AND NOT remote:\"127.0.0.1\" AND host:$host AND code:$code AND remote:$remote AND name:$name",
           "refId": "A",
           "timeField": "date"
         }
@@ -1637,7 +1638,7 @@
               "type": "count"
             }
           ],
-          "query": "dnssec:$dnssec AND NOT remote:\"127.0.0.1\" AND host:$host AND code:$code AND remote:$remote AND name:$name",
+          "query": "dnssec:$dnssec AND duration:>=$min AND NOT remote:\"127.0.0.1\" AND host:$host AND code:$code AND remote:$remote AND name:$name",
           "refId": "A",
           "timeField": "date"
         }
@@ -1710,7 +1711,7 @@
               "type": "logs"
             }
           ],
-          "query": "dnssec:$dnssec AND host:$host AND code:$code AND remote:$remote AND name:$name",
+          "query": "dnssec:$dnssec AND duration:>=$min AND host:$host AND code:$code AND remote:$remote AND name:$name",
           "refId": "A",
           "timeField": "date"
         }
@@ -1920,14 +1921,14 @@
           "value": "$__all"
         },
         "datasource": "CoreDNS",
-        "definition": "{\"find\": \"terms\", \"field\": \"name\", \"size\": 1000, \"orderBy\": \"doc_count\", \"query\": \"dnssec:$dnssec AND host:$host AND code:$code AND remote:$remote\"}",
+        "definition": "{\"find\": \"terms\", \"field\": \"name\", \"size\": 1000, \"orderBy\": \"doc_count\", \"query\": \"dnssec:$dnssec AND duration:>=$min AND host:$host AND code:$code AND remote:$remote\"}",
         "hide": 0,
         "includeAll": true,
         "label": "Domain",
         "multi": false,
         "name": "name",
         "options": [],
-        "query": "{\"find\": \"terms\", \"field\": \"name\", \"size\": 1000, \"orderBy\": \"doc_count\", \"query\": \"dnssec:$dnssec AND host:$host AND code:$code AND remote:$remote\"}",
+        "query": "{\"find\": \"terms\", \"field\": \"name\", \"size\": 1000, \"orderBy\": \"doc_count\", \"query\": \"dnssec:$dnssec AND duration:>=$min AND host:$host AND code:$code AND remote:$remote\"}",
         "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
@@ -1937,11 +1938,31 @@
         "tagsQuery": "",
         "type": "query",
         "useTags": false
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "0",
+          "value": "0"
+        },
+        "hide": 0,
+        "label": "Min Response ms",
+        "name": "min",
+        "options": [
+          {
+            "selected": true,
+            "text": "0",
+            "value": "0"
+          }
+        ],
+        "query": "0",
+        "skipUrlSync": false,
+        "type": "textbox"
       }
     ]
   },
   "time": {
-    "from": "now-7d",
+    "from": "now-24h",
     "to": "now"
   },
   "timepicker": {
@@ -1960,5 +1981,5 @@
   "timezone": "",
   "title": "DNS",
   "uid": "SsF-U4mMz",
-  "version": 13
+  "version": 16
 }
