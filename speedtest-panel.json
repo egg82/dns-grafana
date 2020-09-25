@@ -16,6 +16,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 2,
+  "iteration": 1601000796318,
   "links": [],
   "panels": [
     {
@@ -26,7 +27,8 @@
       "datasource": "Speedtest",
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "custom": {},
+          "links": []
         },
         "overrides": []
       },
@@ -53,9 +55,10 @@
       "linewidth": 1,
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "7.2.0",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -88,6 +91,7 @@
               "type": "avg"
             }
           ],
+          "query": "host:$host",
           "refId": "A",
           "timeField": "date"
         },
@@ -115,7 +119,70 @@
               "type": "avg"
             }
           ],
+          "query": "host:$host",
           "refId": "B",
+          "timeField": "date"
+        },
+        {
+          "alias": "Upload 95%",
+          "bucketAggs": [
+            {
+              "field": "date",
+              "id": "2",
+              "settings": {
+                "interval": "1h",
+                "min_doc_count": 0,
+                "trimEdges": 0
+              },
+              "type": "date_histogram"
+            }
+          ],
+          "metrics": [
+            {
+              "field": "upload",
+              "id": "1",
+              "meta": {},
+              "settings": {
+                "percents": [
+                  "95"
+                ]
+              },
+              "type": "percentiles"
+            }
+          ],
+          "query": "host:$host",
+          "refId": "C",
+          "timeField": "date"
+        },
+        {
+          "alias": "Download 95%",
+          "bucketAggs": [
+            {
+              "field": "date",
+              "id": "2",
+              "settings": {
+                "interval": "1h",
+                "min_doc_count": 0,
+                "trimEdges": 0
+              },
+              "type": "date_histogram"
+            }
+          ],
+          "metrics": [
+            {
+              "field": "download",
+              "id": "1",
+              "meta": {},
+              "settings": {
+                "percents": [
+                  "95"
+                ]
+              },
+              "type": "percentiles"
+            }
+          ],
+          "query": "host:$host",
+          "refId": "D",
           "timeField": "date"
         }
       ],
@@ -230,6 +297,7 @@
               "type": "count"
             }
           ],
+          "query": "host:$host",
           "refId": "A",
           "timeField": "date"
         }
@@ -248,7 +316,8 @@
       "datasource": "Speedtest",
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "custom": {},
+          "links": []
         },
         "overrides": []
       },
@@ -275,9 +344,10 @@
       "linewidth": 1,
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "7.2.0",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -309,7 +379,39 @@
               "type": "avg"
             }
           ],
+          "query": "host:$host",
           "refId": "A",
+          "timeField": "date"
+        },
+        {
+          "alias": "Ping 95%",
+          "bucketAggs": [
+            {
+              "field": "date",
+              "id": "2",
+              "settings": {
+                "interval": "1h",
+                "min_doc_count": 0,
+                "trimEdges": 0
+              },
+              "type": "date_histogram"
+            }
+          ],
+          "metrics": [
+            {
+              "field": "ping",
+              "id": "1",
+              "meta": {},
+              "settings": {
+                "percents": [
+                  "95"
+                ]
+              },
+              "type": "percentiles"
+            }
+          ],
+          "query": "host:$host",
+          "refId": "B",
           "timeField": "date"
         }
       ],
@@ -359,7 +461,8 @@
       "fieldConfig": {
         "defaults": {
           "custom": {
-            "align": null
+            "align": null,
+            "filterable": false
           },
           "mappings": [],
           "thresholds": {
@@ -380,55 +483,31 @@
       },
       "gridPos": {
         "h": 8,
-        "w": 24,
+        "w": 6,
         "x": 0,
         "y": 16
       },
       "id": 9,
       "options": {
         "showHeader": true,
-        "sortBy": [
-          {
-            "desc": true,
-            "displayName": "date"
-          }
-        ]
+        "sortBy": []
       },
-      "pluginVersion": "7.0.3",
+      "pluginVersion": "7.2.0",
       "targets": [
         {
-          "bucketAggs": [
-            {
-              "fake": true,
-              "field": "date",
-              "id": "3",
-              "settings": {
-                "interval": "1d",
-                "min_doc_count": 0,
-                "trimEdges": 0
-              },
-              "type": "date_histogram"
-            },
-            {
-              "field": "ip",
-              "id": "2",
-              "settings": {
-                "min_doc_count": 1,
-                "order": "desc",
-                "orderBy": "_count",
-                "size": "0"
-              },
-              "type": "terms"
-            }
-          ],
+          "bucketAggs": [],
           "metrics": [
             {
               "field": "select field",
-              "hide": true,
               "id": "1",
-              "type": "count"
+              "meta": {},
+              "settings": {
+                "size": 500
+              },
+              "type": "raw_data"
             }
           ],
+          "query": "",
           "refId": "A",
           "timeField": "date"
         }
@@ -438,13 +517,34 @@
       "title": "IP History",
       "transformations": [
         {
+          "id": "seriesToColumns",
+          "options": {
+            "byField": "ip"
+          }
+        },
+        {
           "id": "organize",
           "options": {
             "excludeByName": {
-              "Count": true,
-              "date": false
+              "_id": true,
+              "_index": true,
+              "_type": true,
+              "download": true,
+              "host": true,
+              "ping": true,
+              "upload": true
             },
-            "indexByName": {},
+            "indexByName": {
+              "_id": 2,
+              "_index": 3,
+              "_type": 4,
+              "date": 0,
+              "download": 5,
+              "host": 6,
+              "ip": 1,
+              "ping": 7,
+              "upload": 8
+            },
             "renameByName": {}
           }
         }
@@ -495,6 +595,7 @@
               "type": "logs"
             }
           ],
+          "query": "host:$host",
           "refId": "A",
           "timeField": "date"
         }
@@ -506,11 +607,38 @@
     }
   ],
   "refresh": "5m",
-  "schemaVersion": 25,
+  "schemaVersion": 26,
   "style": "dark",
   "tags": [],
   "templating": {
-    "list": []
+    "list": [
+      {
+        "allValue": "*",
+        "current": {
+          "selected": false,
+          "text": "All",
+          "value": "$__all"
+        },
+        "datasource": "Speedtest",
+        "definition": "{\"find\": \"terms\", \"field\": \"host\", \"size\": 1000, \"orderBy\": \"doc_count\"}",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Host",
+        "multi": false,
+        "name": "host",
+        "options": [],
+        "query": "{\"find\": \"terms\", \"field\": \"host\", \"size\": 1000, \"orderBy\": \"doc_count\"}",
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      }
+    ]
   },
   "time": {
     "from": "now-7d",
@@ -532,5 +660,5 @@
   "timezone": "",
   "title": "Speed Test",
   "uid": "KGIE-PZMk",
-  "version": 13
+  "version": 6
 }
