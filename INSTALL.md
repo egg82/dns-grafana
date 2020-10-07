@@ -135,7 +135,7 @@ Add the following to the root's crontab
 ### Install CoreDNS
 Install CoreDNS
 ```Bash
-core_version=1.7.0
+core_version=1.7.1
 sudo useradd -M -s /bin/false coredns
 cd ~
 wget https://github.com/coredns/coredns/releases/download/v$core_version/coredns_"$core_version"_linux_amd64.tgz
@@ -177,9 +177,9 @@ sudo mkdir -p /etc/coredns
 
 Create the file `/etc/coredns/Corefile` and add the following, adjusting for your subnet:
 ```
-internal.net 192.168.0.0/16 {
-        file /etc/coredns/db.internal.net       internal.net
-        file /etc/coredns/db.192.168            192.168.in-addr.arpa
+internal.net. 192.168.0.0/16 {
+        whoami
+        file /etc/coredns/db.internal.net     internal.net 192.168.in-addr.arpa
         nsid Internal home network
         dnssec
 
@@ -217,7 +217,7 @@ $TTL    604800
 )
 
 ; NS records
-@       IN      NS      dns
+@       IN      NS      dns.internal.net.
 
 ; A records
 ctl.internal.net.     IN      A       192.168.0.2
@@ -225,27 +225,12 @@ nas.internal.net.     IN      A       192.168.0.5
 dns.internal.net.     IN      CNAME   lab.internal.net.
 plex.internal.net.    IN      CNAME   lab.internal.net.
 homelab.internal.net. IN      CNAME   lab.internal.net.
-lab.internal.net.     IN      A       192.168.0.6
-```
-
-Create the file `/etc/coredns/db.192.168` and add the following, adjusting for your subnet and records:
-```
-$TTL    604800
-@       IN      SOA     dns.internal.net.     admin.internal.net. (
-        3               ; Serial
-        604800          ; Refresh
-        86400           ; Retry
-        2419200         ; Expire
-        604800          ; Negative cache TTL
-)
-
-; NS records
-@       IN      NS      dns
+lab.internal.net.     IN      A       192.168.0.3
 
 ; PTR records
 2.0   IN      PTR     ctl.internal.net. ; 192.168.   0.2
 5.0   IN      PTR     nas.internal.net. ; 192.168.   0.5
-6.0   IN      PTR     lab.internal.net. ; 192.168.   0.6
+3.0   IN      PTR     lab.internal.net. ; 192.168.   0.3
 ```
 
 chown/chmod the config directory and files
