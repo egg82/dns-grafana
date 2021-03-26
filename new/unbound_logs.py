@@ -44,7 +44,7 @@ def main():
                         .tag('server', server) \
                         .tag('type', ltype) \
                         .tag('dnssec', dnssec) \
-                        .field('name', name) \
+                        .tag('name', name) \
                         .time(date, WritePrecision.S)
 
                     WRITE_API.write(INFLUX_BUCKET, INFLUX_ORG, point)

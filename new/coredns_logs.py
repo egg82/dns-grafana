@@ -104,7 +104,7 @@ def main():
                 .tag('type', ltype) \
                 .tag('dnssec', dnssec) \
                 .tag('code', code) \
-                .field('name', name) \
+                .tag('name', name) \
                 .field('duration', duration) \
                 .time(date, WritePrecision.S)
 
