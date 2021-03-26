@@ -1,0 +1,5 @@
+influxdb-client
+tailer
+ujson
+python-dateutil
+speedtest-cli
