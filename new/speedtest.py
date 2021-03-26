@@ -14,7 +14,7 @@ from influxdb_client.client.write_api import SYNCHRONOUS
 
 from settings import INFLUX_URL
 from settings import INFLUX_TOKEN
-from settings import INFLUX_BUCKET
+from settings import INFLUX_SPEEDTEST_BUCKET as INFLUX_BUCKET
 from settings import INFLUX_ORG
 
 CLIENT = InfluxDBClient(url=INFLUX_URL, token=INFLUX_TOKEN)
