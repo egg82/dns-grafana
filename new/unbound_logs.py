@@ -39,7 +39,7 @@ def main():
         #while True:
             if finished:
                 if not ltype == 'DS' and not ltype == 'DNSKEY':
-                    point = Point('query') \
+                    point = Point('unbound') \
                         .tag('level', level) \
                         .tag('server', server) \
                         .tag('type', ltype) \

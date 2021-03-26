@@ -97,7 +97,7 @@ def main():
             split = re.split(DURATION_PATTERN, line)
             duration = float(split[1]) * 1000.0
 
-            point = Point('query') \
+            point = Point('coredns') \
                 .tag('host', host) \
                 .tag('level', level) \
                 .tag('remote', remote) \
