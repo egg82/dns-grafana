@@ -12,10 +12,10 @@ from pathlib import Path
 from influxdb_client import InfluxDBClient, Point, WritePrecision
 from influxdb_client.client.write_api import SYNCHRONOUS
 
-INFLUX_URL = 'http://127.0.0.1:8086'
-INFLUX_TOKEN = '$$$ INFLUX-TOKEN $$$'
-INFLUX_ORG = 'dns'
-INFLUX_BUCKET = 'speedtest'
+from . settings import INFLUX_URL
+from . settings import INFLUX_TOKEN
+from . settings import INFLUX_BUCKET
+from . settings import INFLUX_ORG
 
 CLIENT = InfluxDBClient(url=INFLUX_URL, token=INFLUX_TOKEN)
 WRITE_API = CLIENT.write_api(write_options=SYNCHRONOUS)
