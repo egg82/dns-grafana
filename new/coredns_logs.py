@@ -7,10 +7,10 @@ import calendar
 from influxdb_client import InfluxDBClient, Point, WritePrecision
 from influxdb_client.client.write_api import SYNCHRONOUS
 
-from . settings import INFLUX_URL
-from . settings import INFLUX_TOKEN
-from . settings import INFLUX_BUCKET
-from . settings import INFLUX_ORG
+from settings import INFLUX_URL
+from settings import INFLUX_TOKEN
+from settings import INFLUX_BUCKET
+from settings import INFLUX_ORG
 
 CLIENT = InfluxDBClient(url=INFLUX_URL, token=INFLUX_TOKEN)
 WRITE_API = CLIENT.write_api(write_options=SYNCHRONOUS)
