@@ -135,11 +135,11 @@ Add the following to the root's crontab
 ### Install CoreDNS
 Install CoreDNS
 ```Bash
-core_version=1.7.1
+core_version=1.8.6
 sudo useradd -M -s /bin/false coredns
 cd ~
-wget https://github.com/coredns/coredns/releases/download/v$core_version/coredns_"$core_version"_linux_amd64.tgz
-tar -xvf coredns_"$core_version"_linux_amd64.tgz
+curl -L "https://github.com/coredns/coredns/releases/download/v${core_version}/coredns_${core_version}_linux_amd64.tgz" -o "coredns_${core_version}_linux_amd64.tgz"
+tar -xvf "coredns_${core_version}_linux_amd64.tgz"
 sudo mv coredns /usr/local/bin
 sudo chown coredns:coredns /usr/local/bin/coredns
 sudo setcap CAP_NET_BIND_SERVICE=+eip /usr/local/bin/coredns
